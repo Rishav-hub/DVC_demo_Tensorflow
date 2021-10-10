@@ -27,11 +27,11 @@ def prepare_base_model(config_path, params_path):
 
     base_model_path = os.path.join(base_model_dir_path, base_model_name)
 
-    model = get_VGG_16_model(input_shape= params['IMAGE_SIZE'],
+    model_base = get_VGG_16_model(input_shape= params['IMAGE_SIZE'],
      model_path= base_model_path)
 
-    model = prepare_model(model, classes= params['CLASSES'],
-     freeze_all= True, freeze_layers= None,
+    model = prepare_model(model_base, classes= params['CLASSES'],
+     freeze_all= False, freeze_layers= 3,
     learning_rate= params['LEARNING_RATE'])
 
     updated_base_model_path = os.path.join(base_model_dir_path,

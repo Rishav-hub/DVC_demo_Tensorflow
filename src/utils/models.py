@@ -3,6 +3,8 @@ import joblib
 import logging
 import os
 from tensorflow.keras.applications.vgg16 import VGG16
+from tensorflow.keras.models import Sequential
+from tensorflow.python.keras.models import Model
 
 
 
@@ -29,17 +31,17 @@ def prepare_model(model, classes,freeze_all, freeze_layers, learning_rate):
             layer.trainable = False
         for layer in model.layers[freeze_layers:]:
             layer.trainable = True
-    
-    flatten_layer = tf.keras.layers.Flatten()
+    model_seq = Sequential()
 
-    predictions = tf.keras.layers.Dense(classes, activation='softmax')(flatten_layer(model.output))
-    full_model = tf.keras.Model(inputs=model.input, outputs=predictions)
+    model_seq.add(model)
+    model_seq.add(tf.keras.layers.Flatten())
+    model_seq.add(tf.keras.layers.Dense(classes, activation='softmax'))
 
 
-    full_model.compile(optimizer=tf.keras.optimizers.SGD(learning_rate= learning_rate),
+    model_seq.compile(optimizer=tf.keras.optimizers.SGD(learning_rate= learning_rate),
                   loss='categorical_crossentropy',
                   metrics=['accuracy'])
 
     logging.info("Custom model is compiled and ready to be trained")
 
-    return full_model
+    return model_seq
