@@ -25,7 +25,7 @@ def prepare_base_model(config_path, params_path):
     base_model_name = artifacts['BASE_MODEL_NAME']
     base_model_dir_path = os.path.join(artifacts_dir, base_model_dir)
 
-    create_directory[(base_model_path])
+    create_directory([base_model_dir_path])
 
     base_model_path = os.path.join(base_model_dir_path, base_model_name)
 
