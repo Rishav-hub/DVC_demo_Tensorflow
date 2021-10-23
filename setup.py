@@ -7,7 +7,7 @@ setup(
     name="src",
     version="0.0.1",
     author="Rishav-hub",
-    description="A small package for dvc ml pipeline demo",
+    description="A small package for dvc DL pipeline demo",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/Rishav-hub/DVC_demo_Tensorflow.git",
