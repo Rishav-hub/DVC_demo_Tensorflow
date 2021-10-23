@@ -38,12 +38,6 @@ def prepare_callbacks(config_path, params_path):
 
     create_and_save_tensorboard_callback(callbacks_dir, tensorboard_log_dir)
     create_and_save_checkpoint_callback(callbacks_dir, checkpoint_dir)
-    
-
-
-    
-     
-
 
 if __name__ == '__main__':
     args = argparse.ArgumentParser()
@@ -56,7 +50,7 @@ if __name__ == '__main__':
     try:
         logging.info(">>>>> Stage Three started !!!")
         prepare_callbacks(config_path=parsed_args.config, params_path=parsed_args.params)
-        logging.info("stage three completed! base model is created >>>>>")
+        logging.info("stage three completed! Callbacks are created >>>>>")
     except Exception as e:
         logging.exception(e)
         raise e

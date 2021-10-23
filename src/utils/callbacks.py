@@ -4,7 +4,6 @@ import joblib
 import logging
 from src.utils.all_utils import get_timestamp
 
-
 def create_and_save_tensorboard_callback(callbacks_dir, tensorboard_log_dir):
     unique_name = get_timestamp("tb_logs")
 
@@ -19,4 +18,18 @@ def create_and_save_checkpoint_callback(callbacks_dir, checkpoint_dir):
     checkpoint_file = os.path.join(checkpoint_dir, "ckpt_model.h5")
     checkpoint_callback = tf.keras.callbacks.ModelCheckpoint(checkpoint_file, 
                                                     save_weights_only=True)
-    
+    ckpt_callback_filepath = os.path.join(callbacks_dir, "checkpoint_cb.cb")
+    joblib.dump(checkpoint_callback, ckpt_callback_filepath)
+    logging.info(f"checkpoint callback is being saved at {ckpt_callback_filepath}")
+
+def get_callbacks(callbacks_dir_path):
+
+    callbacks_path = [
+        os.path.join(callbacks_dir_path, bin_file) for bin_file in os.listdir(callbacks_dir_path)
+    ]
+
+    callbacks = [joblib.load(callback_path) for callback_path in callbacks_path]
+
+    logging.info("Callacks Loaded !!!")
+
+    return callbacks
