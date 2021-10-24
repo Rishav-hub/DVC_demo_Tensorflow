@@ -2,6 +2,7 @@ from src.utils.all_utils import read_yaml, create_directory
 from src.utils.callbacks import create_and_save_tensorboard_callback, create_and_save_checkpoint_callback
 from src.utils.models import load_full_model
 from src.utils.callbacks import get_callbacks
+from src.utils.data_management import train_valid_generator
 import argparse
 import os
 import logging
@@ -40,6 +41,24 @@ def train_model(config_path, params_path):
 
     callbacks = get_callbacks(call_dir_path)
 
+    train_generator, valid_generator = train_valid_generator(
+        data_dir=artifacts["DATA_DIR"],
+        IMAGE_SIZE=tuple(params["IMAGE_SIZE"][:-1]),
+        BATCH_SIZE=params["BATCH_SIZE"],
+        do_data_augmentation=params["AUGMENTATION"]
+    )
+
+    logging.info(">>>>Started Training model...!!!/n")
+
+    model.fit(train_generator, 
+        #   steps_per_epoch= 12409 // 32, 
+          epochs = params["EPOCHS"],
+          validation_data = valid_generator,
+        #   validation_steps = 10,
+          callbacks= callbacks)
+
+    logging.info(">>>>Finished Training model...!!!/n")
+    model.save(os.path.join(train_model_dir_path, artifacts['TRAINED_MODEL_NAME']))
 if __name__ == '__main__':
     args = argparse.ArgumentParser()
 
