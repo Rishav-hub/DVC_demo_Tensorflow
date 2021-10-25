@@ -2,12 +2,12 @@ stages:
   load_save:
     cmd: python src/stage_01_load_save.py -c config/config.yaml
     deps:
-      - src\stage_01_load_save.py
-      - src\utils\all_utils.py
-      - config\config.yaml
+      - src/stage_01_load_save.py
+      - src/utils/all_utils.py
+      - config/config.yaml
     outs:
-      - data\cat\*.jpg
-      - data\dog\*.jpg
+      - data/cat/
+      - data/dog/
 
   
   prepare_base_model:
@@ -17,8 +17,8 @@ stages:
       - src\utils\all_utils.py
       - src\utils\models.py
       - config\config.yaml
-      - data\cat\*.jpg
-      - data\dog\*.jpg
+      - data\cat\
+      - data\dog\
     params:
       - IMAGE_SIZE
       - LEARNING_RATE
@@ -29,7 +29,7 @@ stages:
   prepare_callbacks:
     cmd: python src/stage_03_prepare_callbacks.py -c config/config.yaml -p params.yaml
     deps:
-      - src\stage_03_training.py
+      - src\stage_03_prepare_callbacks.py
       - src\utils\all_utils.py
       - src\utils\callbacks.py
       - config\config.yaml
@@ -47,7 +47,7 @@ stages:
       - src\utils\data_management.py
       - config\config.yaml
       - artifacts\base_model\updated_VGG16_base_model.h5     
-      - data\cat\*.jpg
-      - data\dog\*.jpg
+      - data\cat\
+      - data\dog\
     outs:
       - artifacts\model\model_new.h5

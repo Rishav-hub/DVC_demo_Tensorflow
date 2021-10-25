@@ -49,11 +49,14 @@ def train_model(config_path, params_path):
 
     logging.info(">>>>Started Training model...!!!/n")
 
+    steps_per_epoch= train_generator.samples // params["BATCH_SIZE"]
+    validation_data = valid_generator.samples // params["BATCH_SIZE"]
+
     model.fit(train_generator, 
-        #   steps_per_epoch= 12409 // 32, 
+          steps_per_epoch= train_generator.samples // params["BATCH_SIZE"], 
           epochs = params["EPOCHS"],
-          validation_data = valid_generator,
-        #   validation_steps = 10,
+          validation_data = valid_generator.samples // params["BATCH_SIZE"],
+          validation_steps = 10,
           callbacks= callbacks)
 
     logging.info(">>>>Finished Training model...!!!/n")
