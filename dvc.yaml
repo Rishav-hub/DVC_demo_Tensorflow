@@ -17,6 +17,7 @@ stages:
       - src\utils\all_utils.py
       - src\utils\models.py
       - config\config.yaml
+      - params.yaml
       - data\cat\
       - data\dog\
     params:
