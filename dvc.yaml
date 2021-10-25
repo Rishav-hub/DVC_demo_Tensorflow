@@ -47,8 +47,16 @@ stages:
       - src\utils\models.py
       - src\utils\data_management.py
       - config\config.yaml
+      - params.yaml
       - artifacts\base_model\updated_VGG16_base_model.h5     
       - data\cat\
       - data\dog\
+      - artifacts\callbacks\tensorboard_cb.cb
+      - artifacts\callbacks\checkpoint_cb.cb
+    params:
+      - EPOCHS
+      - BATCH_SIZE
+      - IMAGE_SIZE
+      - AUGMENTATION
     outs:
-      - artifacts\model\model_new.h5
+      - artifacts/model
