@@ -1,5 +1,5 @@
 from src.utils.all_utils import read_yaml, create_directory
-from src.utils.models import load_full_model
+from src.utils.models import load_full_model, get_unique_model_file_path
 from src.utils.callbacks import get_callbacks
 from src.utils.data_management import train_valid_generator
 import argparse
@@ -53,14 +53,21 @@ def train_model(config_path, params_path):
     validation_data = valid_generator.samples // params["BATCH_SIZE"]
 
     model.fit(train_generator, 
-          steps_per_epoch= train_generator.samples // params["BATCH_SIZE"], 
+          steps_per_epoch= steps_per_epoch, 
           epochs = params["EPOCHS"],
-          validation_data = valid_generator.samples // params["BATCH_SIZE"],
+          validation_data = validation_data,
           validation_steps = 10,
           callbacks= callbacks)
 
     logging.info(">>>>Finished Training model...!!!/n")
-    model.save(os.path.join(train_model_dir_path, artifacts['TRAINED_MODEL_NAME']))
+
+    trained_model_dir = os.path.join(artifacts, artifacts['TRAINED_MODEL_DIR'])
+    create_directory([trained_model_dir])
+
+    model_file_path = get_unique_model_file_path(trained_model_dir)
+    model.save(model_file_path)
+
+    logging.info(">>>>Saved model to {}/n".format(model_file_path))
 if __name__ == '__main__':
     args = argparse.ArgumentParser()
 
@@ -72,7 +79,7 @@ if __name__ == '__main__':
     try:
         logging.info(">>>>> Stage Four started !!!")
         train_model(config_path=parsed_args.config, params_path=parsed_args.params)
-        logging.info("stage Four completed! Training is Done >>>>> /n")
+        logging.info("Stage Four completed! Training is Done >>>>> /n")
     except Exception as e:
         logging.exception(e)
         raise e

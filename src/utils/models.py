@@ -5,7 +5,7 @@ import os
 from tensorflow.keras.applications.vgg16 import VGG16
 from tensorflow.keras.models import Sequential
 from tensorflow.python.keras.models import Model
-
+from src.utils.all_utils import get_timestamp
 
 
 
@@ -53,3 +53,11 @@ def load_full_model(model_path):
     model = tf.keras.models.load_model(model_path)
     logging.info(f"Model loaded from {model_path}")
     return model
+
+def get_unique_model_file_path(model_directory, model_name = "Model"):
+    """
+    Returns a unique file path for a model.
+    """
+    timestamp = get_timestamp(model_name)
+    model_path = os.path.join(model_directory, f"{model_name}_{timestamp}.h5")
+    return model_path
