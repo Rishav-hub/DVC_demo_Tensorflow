@@ -55,8 +55,8 @@ stages:
     cmd: python src/stage_03_prepare_callbacks.py -c config/config.yaml -p params.yaml
     deps:
     - path: config\config.yaml
-      md5: d1da67484a19a8b2bd5b4ce458e8ace4
-      size: 509
+      md5: 991124cf4ba8893d390581baca9b009f
+      size: 562
     - path: params.yaml
       md5: 39774b4ce3c4ac6d0396f7161d632208
       size: 129
@@ -74,23 +74,23 @@ stages:
       md5: be7e3462d91a3951380847bd6534c1b0
       size: 703
     - path: artifacts\callbacks\tensorboard_cb.cb
-      md5: cf05d7cbcfd270b115ae59db611b73c2
+      md5: c27798e055ec87f56c0aceaf2dbc9a33
       size: 549
   training:
     cmd: python src/stage_04_training.py -c config/config.yaml -p params.yaml
     deps:
     - path: artifacts\base_model\updated_VGG16_base_model.h5
-      md5: fea936b3a50502d43b778cc1cc139b4c
+      md5: d9ba9eb623245a4da4b60a804501b9bd
       size: 59111648
     - path: artifacts\callbacks\checkpoint_cb.cb
       md5: be7e3462d91a3951380847bd6534c1b0
       size: 703
     - path: artifacts\callbacks\tensorboard_cb.cb
-      md5: cf05d7cbcfd270b115ae59db611b73c2
+      md5: c27798e055ec87f56c0aceaf2dbc9a33
       size: 549
     - path: config\config.yaml
-      md5: d1da67484a19a8b2bd5b4ce458e8ace4
-      size: 509
+      md5: 991124cf4ba8893d390581baca9b009f
+      size: 562
     - path: data
       md5: a52ad4b30715598bfd754e3e9c51ef2c.dir
       size: 37934943
@@ -124,6 +124,41 @@ stages:
         - 3
     outs:
     - path: artifacts/model
-      md5: a713045c237a7513c2b8027ea5ccf073.dir
+      md5: fe536072694bd20181c4921e39727eac.dir
       size: 59113664
       nfiles: 1
+  evaluate:
+    cmd: python src/stage_05_evaluate.py -c config/config.yaml -p params.yaml
+    deps:
+    - path: artifacts\model
+      md5: fe536072694bd20181c4921e39727eac.dir
+      size: 59113664
+      nfiles: 1
+    - path: config\config.yaml
+      md5: 991124cf4ba8893d390581baca9b009f
+      size: 562
+    - path: params.yaml
+      md5: 39774b4ce3c4ac6d0396f7161d632208
+      size: 129
+    - path: src\stage_05_evaluate.py
+      md5: e0fcc8a4275a0e1e385767d8ed956a25
+      size: 2907
+    - path: src\utils\all_utils.py
+      md5: a08fe476731cf12154777c451c5dc766
+      size: 1138
+    - path: src\utils\models.py
+      md5: c054f72a4ceeacd7ece2a1c2c7dec272
+      size: 1963
+    params:
+      params.yaml:
+        AUGMENTATION: true
+        BATCH_SIZE: 16
+        EPOCHS: 1
+        IMAGE_SIZE:
+        - 224
+        - 224
+        - 3
+    outs:
+    - path: artifacts\report_dir\score.json
+      md5: e3acefc29cb0069ad7fcdc6f9279cafa
+      size: 152
