@@ -58,3 +58,20 @@ stages:
       - AUGMENTATION
     outs:
       - artifacts/model
+    
+  evaluate:
+    cmd: python src/stage_05_evaluate.py -c config/config.yaml -p params.yaml
+    deps:
+      - src\stage_05_evaluate.py
+      - src\utils\all_utils.py
+      - src\utils\models.py
+      - config\config.yaml
+      - params.yaml
+      - artifacts\model
+    params:
+      - EPOCHS
+      - BATCH_SIZE
+      - IMAGE_SIZE
+      - AUGMENTATION
+    outs:
+      - artifacts\report_dir\score.json

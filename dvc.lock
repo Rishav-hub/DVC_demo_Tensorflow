@@ -4,8 +4,8 @@ stages:
     cmd: python src/stage_01_load_save.py -c config/config.yaml
     deps:
     - path: config/config.yaml
-      md5: d1da67484a19a8b2bd5b4ce458e8ace4
-      size: 509
+      md5: 991124cf4ba8893d390581baca9b009f
+      size: 562
     - path: src/stage_01_load_save.py
       md5: 6821f63a9f377f3026c898724892032d
       size: 1721
@@ -25,8 +25,8 @@ stages:
     cmd: python src/stage_02_prepare_base_model.py -c config/config.yaml -p params.yaml
     deps:
     - path: config\config.yaml
-      md5: d1da67484a19a8b2bd5b4ce458e8ace4
-      size: 509
+      md5: 991124cf4ba8893d390581baca9b009f
+      size: 562
     - path: params.yaml
       md5: 39774b4ce3c4ac6d0396f7161d632208
       size: 129
@@ -49,7 +49,7 @@ stages:
         LEARNING_RATE: 0.001
     outs:
     - path: artifacts\base_model\updated_VGG16_base_model.h5
-      md5: fea936b3a50502d43b778cc1cc139b4c
+      md5: d9ba9eb623245a4da4b60a804501b9bd
       size: 59111648
   prepare_callbacks:
     cmd: python src/stage_03_prepare_callbacks.py -c config/config.yaml -p params.yaml
