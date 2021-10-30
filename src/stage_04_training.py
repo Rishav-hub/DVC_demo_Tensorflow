@@ -68,6 +68,8 @@ def train_model(config_path, params_path):
     model.save(model_file_path)
 
     logging.info(">>>>Saved model to {}/n".format(model_file_path))
+
+    
 if __name__ == '__main__':
     args = argparse.ArgumentParser()
 

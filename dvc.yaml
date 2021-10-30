@@ -18,8 +18,6 @@ stages:
       - src\utils\models.py
       - config\config.yaml
       - params.yaml
-      # - data\cat\
-      # - data\dog\
     params:
       - IMAGE_SIZE
       - LEARNING_RATE
