@@ -10,6 +10,8 @@ artifacts:
   TENSORBOARD_ROOT_LOG_DIR: tensorboard_log_dir
   CALLBACKS_DIR: callbacks
   DATA_DIR: data
+  MODEL_SCORE: score.json
+  REPORT_DIR: report_dir
 
 source_download_dirs:
   - ../outside_data/dog
