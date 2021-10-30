@@ -39,7 +39,6 @@ def train_model(config_path, params_path):
     call_dir_path = os.path.join(artifacts_dir, artifacts['CALLBACKS_DIR'])
 
     callbacks = get_callbacks(call_dir_path)
-
     train_generator, valid_generator = train_valid_generator(
         data_dir=artifacts["DATA_DIR"],
         IMAGE_SIZE=tuple(params["IMAGE_SIZE"][:-1]),
@@ -50,18 +49,19 @@ def train_model(config_path, params_path):
     logging.info(">>>>Started Training model...!!!/n")
 
     steps_per_epoch= train_generator.samples // params["BATCH_SIZE"]
-    validation_data = valid_generator.samples // params["BATCH_SIZE"]
+    validation_steps = valid_generator.samples // params["BATCH_SIZE"]
 
     model.fit(train_generator, 
           steps_per_epoch= steps_per_epoch, 
           epochs = params["EPOCHS"],
-          validation_data = validation_data,
-          validation_steps = 10,
+          validation_data = valid_generator,
+          validation_steps = validation_steps,
           callbacks= callbacks)
 
     logging.info(">>>>Finished Training model...!!!/n")
 
-    trained_model_dir = os.path.join(artifacts, artifacts['TRAINED_MODEL_DIR'])
+    trained_model_dir = os.path.join(artifacts_dir, artifacts['TRAINED_MODEL_DIR'])
+    # print(trained_model_dir)
     create_directory([trained_model_dir])
 
     model_file_path = get_unique_model_file_path(trained_model_dir)
